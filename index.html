@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nexus Code — Ultra Pro (Firebase)</title>
+<link rel="stylesheet" href="/styles/style.css">
+<script defer src="/scripts/particles.js"></script>
+<script defer src="/scripts/scroll.js"></script>
+<script defer src="/scripts/firebase-init.js"></script>
+<script defer src="/scripts/app-firebase.js"></script>
+</head>
+<body>
+<canvas id="particles"></canvas>
+
+<header class="nav glass">
+  <div class="nav-container">
+    <img src="/public/logo.png" class="logo" alt="Nexus Code">
+    <nav>
+      <a href="/index.html">Início</a>
+      <a href="/pages/sobre.html">Sobre</a>
+      <a href="/pages/portfolio.html">Portfólio</a>
+      <a href="/blog/index.html">Blog</a>
+      <a href="/pages/contato.html">Contato</a>
+      <a href="/admin/login.html" class="btn-primary">Painel</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero reveal">
+  <div class="hero-content">
+    <h1 class="title">Nexus <span>Code</span></h1>
+    <p class="subtitle">Vision/IA • Glass • Partículas • Integração completa</p>
+    <div class="hero-buttons">
+      <a href="/pages/contato.html" class="btn-primary pulse">Começar Agora</a>
+      <a href="/pages/portfolio.html" class="btn-secondary">Ver Projetos</a>
+    </div>
+  </div>
+
+  <div class="hero-card glass floating reveal">
+    <img src="/public/logo.png" class="hero-logo" alt="logo">
+    <h3>Futuro Real</h3>
+    <p>Desenvolvimento, Bots, IA e Automação</p>
+  </div>
+</section>
+
+<section id="services" class="section reveal">
+  <h2>Serviços</h2>
+  <div class="grid">
+    <article class="card"><h3>Desenvolvimento Web</h3><p>Sistemas, SaaS, APIs e painéis com design futurista.</p></article>
+    <article class="card"><h3>Apps Mobile</h3><p>Android / iOS com UX moderno.</p></article>
+    <article class="card"><h3>Bots & Automação</h3><p>Bots Telegram, WhatsApp e automações inteligentes.</p></article>
+    <article class="card"><h3>Segurança</h3><p>Pentest, hardening e monitoramento.</p></article>
+  </div>
+</section>
+
+<section id="contact" class="section reveal">
+  <h2>Fale conosco</h2>
+  <p>Envie sua ideia — respondemos em até 24h.</p>
+
+  <form id="contactForm">
+    <input name="name" placeholder="Nome" required />
+    <input name="email" type="email" placeholder="E-mail" required />
+    <input name="company" placeholder="Empresa (opcional)"/>
+    <textarea name="message" rows="5" placeholder="Descreva o projeto" required></textarea>
+    <button type="submit" class="btn-primary">Enviar</button>
+    <div id="formStatus" role="status" aria-live="polite"></div>
+  </form>
+</section>
+</main>
+
+<footer class="footer">
+  <div>© 2025 Nexus Code — Conexão · Código · Inovação</div>
+</footer>
+</body>
+</html>

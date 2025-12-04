@@ -1,0 +1,52 @@
+:root{--bg:#050012;--accent:#8c52ff;--glass-1:rgba(255,255,255,0.03);--glass-2:rgba(140,82,255,0.12)}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#04000a,#070116);color:#fff;overflow-x:hidden}
+#particles{position:fixed;inset:0;z-index:-10;pointer-events:none}
+
+/* nav */
+.nav{position:sticky;top:18px;padding:12px}
+.nav-container{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:8px 16px}
+.logo{width:64px;border-radius:12px;box-shadow:0 6px 24px rgba(140,82,255,0.08)}
+nav a{color:rgba(255,255,255,0.9);text-decoration:none;margin:0 12px;font-size:15px;transition:all .2s}
+nav a:hover{color:var(--accent);transform:translateY(-3px)}
+
+/* glass card */
+.glass{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-1);backdrop-filter:blur(14px);border-radius:14px;box-shadow:0 24px 80px rgba(12,6,40,0.6)}
+
+/* hero */
+.hero{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:120px auto;padding:20px}
+.title{font-weight:900;font-size:56px;line-height:1}
+.title span{color:var(--accent);text-shadow:0 12px 48px rgba(140,82,255,0.16)}
+.subtitle{color:rgba(255,255,255,0.85);margin-top:10px}
+
+/* buttons */
+.btn-primary{background:linear-gradient(90deg,var(--accent),#6f3bff);padding:12px 22px;border-radius:14px;color:#000;font-weight:700;border:none;display:inline-block;cursor:pointer;box-shadow:0 10px 60px rgba(140,82,255,0.16);transition:transform .18s,box-shadow .18s}
+.btn-primary:hover{transform:translateY(-4px);box-shadow:0 30px 120px rgba(140,82,255,0.24)}
+.btn-secondary{background:transparent;border:1px solid var(--accent);padding:12px 20px;border-radius:12px;color:var(--accent)}
+
+.hero-card{width:360px;padding:34px;border-radius:18px;text-align:center;border:1px solid var(--glass-2)}
+.hero-logo{width:160px;margin-bottom:12px}
+.hero-card h3{margin:8px 0 4px}
+.hero-card p{color:rgba(255,255,255,0.75)}
+
+/* sections */
+.section{max-width:1100px;margin:60px auto;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{padding:18px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)}
+
+/* form */
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+input,textarea{padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff}
+
+/* footer */
+.footer{padding:40px 0;text-align:center;color:rgba(255,255,255,0.6);font-size:14px}
+
+/* animations */
+.reveal{opacity:0;transform:translateY(28px);transition:all .9s cubic-bezier(.2,.9,.2,1)}
+.reveal.visible{opacity:1;transform:none}
+.pulse{animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 10px var(--accent)}50%{box-shadow:0 0 30px var(--accent)}100%{box-shadow:0 0 10px var(--accent)}}
+.floating{animation:float 4s ease-in-out infinite}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
+
+/* responsive */
+@media(max-width:900px){.hero{flex-direction:column;gap:30px;margin:80px auto}.title{font-size:40px}}

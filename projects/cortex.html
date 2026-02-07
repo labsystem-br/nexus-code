@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cortex AI CRM - Demo</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+
+        /* Responsive Sidebar/Bottom Nav */
+        .sidebar {
+            width: 64px;
+            border-right: 1px solid #1e293b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            gap: 24px;
+            transition: all 0.3s;
+            z-index: 50;
+            background: #0f172a;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: 60px;
+                flex-direction: row;
+                border-right: none;
+                border-top: 1px solid #1e293b;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                padding: 0;
+                justify-content: space-around;
+            }
+
+            .sidebar .nav-item {
+                margin: 0;
+            }
+
+            .sidebar .mt-auto {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            body {
+                padding-bottom: 60px;
+                /* Space for nav */
+            }
+
+            header {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .back-btn {
+                bottom: 80px;
+            }
+
+            /* Push button up */
+        }
+
+        .nav-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #3b82f6;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .kanban-col {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 16px;
+            min-width: 250px;
+            flex-shrink: 0;
+        }
+
+        .kanban-card {
+            background: #334155;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            cursor: grab;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .kanban-card:active {
+            cursor: grabbing;
+            transform: scale(1.02);
+        }
+
+        .kanban-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .tag-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .tag-med {
+            background: rgba(234, 179, 8, 0.2);
+            color: #fde047;
+        }
+
+        .tag-low {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #fff;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            padding: 2rem;
+            rounded-lg;
+            width: 90%;
+            max-width: 400px;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            border: 1px solid #334155;
+        }
+
+        .modal.open .modal-content {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="flex h-screen flex-col md:flex-row">
+
+    <!-- Sidebar / Bottom Nav -->
+    <div class="sidebar">
+        <div class="nav-item active" onclick="switchView('board')"><i data-lucide="layout-dashboard"></i></div>
+        <div class="nav-item" onclick="switchView('analytics')"><i data-lucide="pie-chart"></i></div>
+        <div class="nav-item" onclick="alert('Feature Coming Soon')"><i data-lucide="users"></i></div>
+        <div class="nav-item" onclick="alert('Inbox Empty')"><i data-lucide="mail"></i></div>
+        <div class="nav-item mt-auto mb-4"><i data-lucide="settings"></i></div>
+    </div>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Header -->
+        <header
+            class="h-16 border-b border-slate-800 flex items-center justify-between px-6 bg-slate-900/90 backdrop-blur">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold shadow-lg shadow-blue-500/20">
+                    C</div>
+                <h1 class="font-bold hidden md:block">Cortex AI <span class="text-slate-500 font-normal">| Sales
+                        Pipeline</span></h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="openModal()"
+                    class="bg-blue-600 px-4 py-2 rounded-lg text-sm font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-500 transition flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i> <span class="hidden sm:inline">New Deal</span>
+                </button>
+                <div class="relative group cursor-pointer">
+                    <div
+                        class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 border-2 border-slate-700">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- View: Board -->
+        <div id="view-board"
+            class="flex-1 p-6 overflow-x-auto overflow-y-hidden bg-gradient-to-br from-slate-900 to-slate-800">
+            <div class="flex gap-6 h-full pb-4 items-start">
+
+                <!-- Col 1 -->
+                <div class="kanban-col w-72 h-full flex flex-col" ondrop="drop(event)" ondragover="allowDrop(event)"
+                    id="col-leads">
+                    <div class="flex justify-between items-center mb-4 text-slate-400 text-sm font-bold px-1">
+                        <span>LEADS (AI SCORED)</span>
+                        <span class="bg-slate-700 px-2 rounded-full text-xs py-0.5 count-badge">3</span>
+                    </div>
+                    <div class="flex-1 overflow-y-auto pr-2 custom-scroll space-y-3" id="list-leads">
+                        <div class="kanban-card" draggable="true" ondragstart="drag(event)" id="c1">
+                            <div class="font-bold text-sm">Enterprise License</div>
+                            <div class="text-xs text-slate-400 mt-1">TechCorp Inc.</div>
+                            <div class="flex justify-between items-center mt-3">
+                                <span class="tag tag-high">98% Win Rate</span>
+                                <div
+                                    class="w-6 h-6 rounded-full bg-slate-600 border border-slate-500 text-[10px] flex items-center justify-center">
+                                    TC</div>
+                            </div>
+                        </div>
+
+                        <div class="kanban-card" draggable="true" ondragstart="drag(event)" id="c2">
+                            <div class="font-bold text-sm">Startup Plan</div>
+                            <div class="text-xs text-slate-400 mt-1">NextLevel Studio</div>
+                            <div class="flex justify-between items-center mt-3">
+                                <span class="tag tag-med">65% Win Rate</span>
+                                <div
+                                    class="w-6 h-6 rounded-full bg-slate-600 border border-slate-500 text-[10px] flex items-center justify-center">
+                                    NL</div>
+                            </div>
+                        </div>
+                        <div class="kanban-card" draggable="true" ondragstart="drag(event)" id="c3">
+                            <div class="font-bold text-sm">SaaS Basic</div>
+                            <div class="text-xs text-slate-400 mt-1">Bakery Fresh</div>
+                            <div class="flex justify-between items-center mt-3">
+                                <span class="tag tag-low">40% Win Rate</span>
+                                <div
+                                    class="w-6 h-6 rounded-full bg-slate-600 border border-slate-500 text-[10px] flex items-center justify-center">
+                                    BF</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="kanban-col w-72 h-full flex flex-col" ondrop="drop(event)" ondragover="allowDrop(event)"
+                    id="col-nego">
+                    <div class="flex justify-between items-center mb-4 text-slate-400 text-sm font-bold px-1">
+                        <span>NEGOTIATION</span>
+                        <span class="bg-slate-700 px-2 rounded-full text-xs py-0.5 count-badge">1</span>
+                    </div>
+                    <div class="flex-1 overflow-y-auto pr-2 custom-scroll space-y-3" id="list-nego">
+                        <div class="kanban-card" draggable="true" ondragstart="drag(event)" id="c4">
+                            <div class="font-bold text-sm">Global Expansion</div>
+                            <div class="text-xs text-slate-400 mt-1">LogiTrans</div>
+                            <div class="flex justify-between items-center mt-3">
+                                <span class="tag tag-high font-mono text-blue-300 bg-blue-900/30">$ 450k</span>
+                                <div
+                                    class="w-6 h-6 rounded-full bg-slate-600 border border-slate-500 text-[10px] flex items-center justify-center">
+                                    LT</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 3 -->
+                <div class="kanban-col w-72 h-full flex flex-col" ondrop="drop(event)" ondragover="allowDrop(event)"
+                    id="col-won">
+                    <div class="flex justify-between items-center mb-4 text-slate-400 text-sm font-bold px-1">
+                        <span>CLOSED WON</span>
+                        <span class="bg-slate-700 px-2 rounded-full text-xs py-0.5 count-badge">12</span>
+                    </div>
+                    <div class="flex-1 overflow-y-auto pr-2 custom-scroll space-y-3" id="list-won">
+                        <div class="kanban-card opacity-50 grayscale hover:grayscale-0 transition" draggable="true"
+                            ondragstart="drag(event)" id="c5">
+                            <div class="font-bold text-sm">Consulting Pack</div>
+                            <div class="text-xs text-slate-400 mt-1">Alpha Group</div>
+                            <div class="flex justify-between items-center mt-3">
+                                <span class="tag bg-green-900 text-green-300">Signed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- View: Analytics -->
+        <div id="view-analytics" class="hidden flex-1 p-6 overflow-y-auto bg-slate-900">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                    <div class="text-slate-400 text-sm">Total Revenue</div>
+                    <div class="text-2xl font-bold text-white mt-1">$ 1,240,500</div>
+                    <div class="text-green-500 text-xs mt-2 flex items-center gap-1"><i data-lucide="trending-up"
+                            class="w-3"></i> +12.5% vs last month</div>
+                </div>
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                    <div class="text-slate-400 text-sm">Active Deals</div>
+                    <div class="text-2xl font-bold text-white mt-1">45</div>
+                    <div class="text-blue-500 text-xs mt-2">Pipeline Healthy</div>
+                </div>
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                    <div class="text-slate-400 text-sm">Avg. Deal Size</div>
+                    <div class="text-2xl font-bold text-white mt-1">$ 28,500</div>
+                    <div class="text-slate-500 text-xs mt-2">-2% vs last month</div>
+                </div>
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                    <div class="text-slate-400 text-sm">AI Prediction</div>
+                    <div class="text-2xl font-bold text-purple-400 mt-1">89%</div>
+                    <div class="text-purple-500/50 text-xs mt-2">Goal Probability</div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 h-[300px] md:h-[400px]">
+                <h3 class="font-bold mb-4">Revenue Forecast (AI Model)</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Deal Modal -->
+    <div class="modal" id="newDealModal">
+        <div class="modal-content">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-lucide="sparkles"
+                    class="text-blue-500"></i> AI Deal Creator</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Company Name</label>
+                    <input type="text" id="dealName"
+                        class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:outline-none focus:border-blue-500"
+                        placeholder="e.g. Acme Corp">
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Estimated Value</label>
+                    <input type="number" id="dealValue"
+                        class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:outline-none focus:border-blue-500"
+                        placeholder="$ 0.00">
+                </div>
+                <button onclick="createDeal()"
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded transition">Generate
+                    Deal with AI</button>
+                <button onclick="closeModal()" class="w-full text-slate-400 hover:text-white text-sm">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <a href="../index.html" class="back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+
+    <script>
+        lucide.createIcons();
+
+        // Drag and Drop Logic
+        function allowDrop(ev) { ev.preventDefault(); }
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.target.style.opacity = "0.5";
+        }
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var card = document.getElementById(data);
+            card.style.opacity = "1";
+
+            // Find closest column/list
+            let target = ev.target;
+            while (target && !target.classList.contains('kanban-col')) {
+                target = target.parentElement;
+            }
+
+            if (target) {
+                const list = target.querySelector('.overflow-y-auto');
+                list.appendChild(card);
+                updateCounts();
+
+                // Animation
+                card.style.animation = "pulse 0.5s";
+                setTimeout(() => card.style.animation = "", 500);
+            }
+        }
+
+        function updateCounts() {
+            document.querySelector('#col-leads .count-badge').innerText = document.getElementById('list-leads').children.length;
+            document.querySelector('#col-nego .count-badge').innerText = document.getElementById('list-nego').children.length;
+            document.querySelector('#col-won .count-badge').innerText = document.getElementById('list-won').children.length;
+        }
+
+        // View Switching
+        function switchView(viewName) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            if (viewName === 'board') {
+                document.getElementById('view-board').classList.remove('hidden');
+                document.getElementById('view-analytics').classList.add('hidden');
+            } else {
+                document.getElementById('view-board').classList.add('hidden');
+                document.getElementById('view-analytics').classList.remove('hidden');
+                initChart();
+            }
+        }
+
+        // Modal
+        function openModal() { document.getElementById('newDealModal').classList.add('open'); }
+        function closeModal() { document.getElementById('newDealModal').classList.remove('open'); }
+
+        function createDeal() {
+            const name = document.getElementById('dealName').value || "New Project";
+            const val = document.getElementById('dealValue').value || "1000";
+
+            const card = document.createElement('div');
+            card.className = "kanban-card";
+            card.draggable = true;
+            card.ondragstart = drag;
+            card.id = "c" + Date.now();
+            card.innerHTML = `
+                <div class="font-bold text-sm">${name}</div>
+                <div class="text-xs text-slate-400 mt-1">AI Generated</div>
+                <div class="flex justify-between items-center mt-3">
+                    <span class="tag tag-med">Analyzing...</span>
+                     <div class="w-6 h-6 rounded-full bg-slate-600 border border-slate-500 text-[10px] flex items-center justify-center">${name.substr(0, 1).toUpperCase()}</div>
+                </div>
+            `;
+
+            document.getElementById('list-leads').prepend(card);
+            closeModal();
+            updateCounts();
+
+            // Simulate AI
+            setTimeout(() => {
+                const tag = card.querySelector('.tag');
+                tag.className = "tag tag-high";
+                tag.innerText = "92% Win Rate";
+            }, 1000);
+        }
+
+        // Chart
+        let chartInstance = null;
+        function initChart() {
+            if (chartInstance) return;
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+
+            // Gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)');
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Projected Revenue',
+                        data: [65, 59, 80, 81, 106, 125],
+                        borderColor: '#3b82f6',
+                        backgroundColor: gradient,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

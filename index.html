@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Nexus Code - Websites, Software e Cyber Security de alta performance. Aumente seu faturamento com tecnologia de verdade.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nexuscode.com.br/">
+    <meta property="og:title" content="Nexus Code | Tecnologia e Segurança Sob Medida">
+    <meta property="og:description"
+        content="Websites, Software e Cyber Security de alta performance. Aumente seu faturamento com tecnologia de verdade.">
+    <meta property="og:image" content="https://nexuscode.com.br/assets/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nexuscode.com.br/">
+    <meta property="twitter:title" content="Nexus Code | Tecnologia e Segurança Sob Medida">
+    <meta property="twitter:description"
+        content="Websites, Software e Cyber Security de alta performance. Aumente seu faturamento com tecnologia de verdade.">
+    <meta property="twitter:image" content="https://nexuscode.com.br/assets/og-image.jpg">
+
+
+    <link rel="icon" href="assets/logo.png" type="image/png">
+    <title>Nexus Code | Tecnologia e Segurança Sob Medida</title>
+
+
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (Lucide via CDN for simplicity in vanilla) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <img src="assets/logo.png" alt="Nexus Code" class="preloader-logo">
+        </div>
+    </div>
+
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <!-- Matrix Background (Hidden by Default) -->
+    <canvas id="matrixCanvas"
+        class="fixed inset-0 z-0 opacity-0 pointer-events-none transition-opacity duration-500"></canvas>
+
+    <!-- Background Elements -->
+    <div class="background-noise"></div>
+    <div class="ambient-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar glass">
+        <div class="container navbar__container">
+
+            <a href="#" class="logo">
+                <img src="assets/logo.png" alt="Nexus Code" style="height: 40px; width: auto; margin-right: 8px;">
+                Nexus<span class="text-purple">Code</span>
+            </a>
+
+            <div class="navbar__links">
+                <a href="#services">Serviços</a>
+                <a href="#projects">Cases</a>
+                <a href="#testimonials">Depoimentos</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact" class="btn btn--sm btn--glow">Diagnóstico Gratuito</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <canvas id="heroParticles"></canvas> <!-- New Particles Canvas -->
+            <div class="container hero__container">
+                <div class="hero__content tilt-element" data-tilt-speed="10">
+                    <div class="hero__badge">🚀 Transformação Digital Premium</div>
+                    <h1 class="hero__title">
+                        <h1 class="hero__title reveal-text">
+                            Sua empresa está <span class="text-gradient">perdendo dinheiro</span> por não ter <span
+                                class="typewriter-text text-purple">tecnologia</span>.
+                        </h1>
+                        <p class="hero__subtitle">
+                            Criamos sites, softwares e sistemas blindados que aumentam sua performance, credibilidade e
+                            faturamento.
+                        </p>
+                        <div class="hero__actions">
+                            <a href="#contact" class="btn btn--primary btn--lg btn--ripple">
+                                👉 Solicitar Diagnóstico
+                            </a>
+                            <button onclick="openWhatsApp()" class="btn btn--outline btn--lg">
+                                💬 Falar no WhatsApp
+                            </button>
+                        </div>
+                        <div class="hero__proof">
+                            <div class="proof-item">
+                                <span class="count-up" data-target="100">0</span>+
+                                <span class="label">Projetos</span>
+                            </div>
+                            <div class="separator"></div>
+                            <div class="proof-item">
+                                <span class="count-up" data-target="98">0</span>%
+                                <span class="label">Satisfação</span>
+                            </div>
+                            <div class="separator"></div>
+                            <div class="proof-item">
+                                <span class="count-up" data-target="5">0</span>+
+                                <span class="label">Anos</span>
+                            </div>
+                        </div>
+                </div>
+
+                <!-- 3D Abstract Visual -->
+                <div class="hero__visual">
+                    <div class="orb-container tilt-element" data-tilt-max="20">
+                        <div class="orb"></div>
+                        <div class="orb-ring"></div>
+                        <div class="orb-ring spinning"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section services">
+            <div class="container">
+                <h2 class="section__title text-center">O que entregamos</h2>
+                <div class="grid-cards">
+                    <!-- Service 1 -->
+                    <div class="card glass tilt-element" data-tilt-max="10">
+                        <div class="card__icon-wrapper">
+                            <i data-lucide="monitor" class="card__icon"></i>
+                        </div>
+                        <h3>Desenvolvimento Web</h3>
+                        <p>Sites de alta conversão focados em vendas e performance.</p>
+                        <ul class="card__list">
+                            <li>⚡ Carregamento instantâneo</li>
+                            <li>📱 Mobile-first</li>
+                            <li>🎨 Design Premium</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="card glass tilt-element" data-tilt-max="10">
+                        <div class="card__icon-wrapper">
+                            <i data-lucide="cpu" class="card__icon"></i>
+                        </div>
+                        <h3>Softwares Sob Medida</h3>
+                        <p>Sistemas escaláveis para automatizar sua toda a operação.</p>
+                        <ul class="card__list">
+                            <li>🔄 Automação de processos</li>
+                            <li>📊 Dashboards em tempo real</li>
+                            <li>☁️ Cloud Computing</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="card glass border-purple tilt-element" data-tilt-max="15">
+                        <div class="card__badge">Destaque</div>
+                        <div class="card__icon-wrapper">
+                            <i data-lucide="shield-check" class="card__icon"></i>
+                        </div>
+                        <h3>Cyber Security</h3>
+                        <p>Blindagem completa para sua empresa não parar nunca.</p>
+                        <ul class="card__list">
+                            <li>🔒 Pentest & Auditoria</li>
+                            <li>🛡️ Hardening de Servidores</li>
+                            <li>👁️ Monitoramento 24/7</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Portfolio Section -->
+        <section id="projects" class="section projects">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="hero__badge">Portfolio</span>
+                    <h2 class="section__title">Cases de Sucesso</h2>
+                    <p class="section-subtitle text-gray"> Projetos que redefiniram o padrão de mercado.</p>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- Project 1: Hades -->
+                    <div class="project-card tilt-element" data-tilt-max="5">
+                        <div class="project-visual">
+                            <div class="ui-mockup cyber-mockup">
+                                <div class="ui-header">
+                                    <div class="ui-dots">
+                                        <div class="ui-dot"></div>
+                                        <div class="ui-dot"></div>
+                                    </div>
+                                    <div class="ui-bar-sm"></div>
+                                </div>
+                                <div class="ui-body">
+                                    <div class="ui-sidebar"></div>
+                                    <div class="ui-grid-main">
+                                        <div class="ui-panel"></div>
+                                        <div class="ui-panel">
+                                            <div class="ui-scan-line"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="project-info glass">
+                            <div class="project-tags">
+                                <span>Cyber Security</span>
+                                <span>Pentest</span>
+                            </div>
+                            <h3>Hades Defense System</h3>
+                            <p>Dashboard de monitoramento de ameaças em tempo real para setor bancário.</p>
+                            <a href="projects/hades.html" class="btn-link">Ver Demo <i
+                                    data-lucide="external-link"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Aurora -->
+                    <div class="project-card tilt-element" data-tilt-max="5">
+                        <div class="project-visual">
+                            <div class="ui-mockup fintech-mockup">
+                                <div class="ui-header">
+                                    <div class="ui-dots">
+                                        <div class="ui-dot"></div>
+                                        <div class="ui-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="ui-body">
+                                    <div class="ui-balance"></div>
+                                    <div class="ui-chart-area">
+                                        <div class="ui-bar"></div>
+                                        <div class="ui-bar"></div>
+                                        <div class="ui-bar"></div>
+                                        <div class="ui-bar"></div>
+                                        <div class="ui-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="project-info glass">
+                            <div class="project-tags">
+                                <span>FinTech</span>
+                                <span>App Mobile</span>
+                            </div>
+                            <h3>Aurora Bank App</h3>
+                            <p>App financeiro com mais de 1M de usuários e zero fraudes reportadas.</p>
+                            <a href="projects/aurora.html" class="btn-link">Ver Demo <i
+                                    data-lucide="external-link"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: Neon -->
+                    <div class="project-card tilt-element" data-tilt-max="5">
+                        <div class="project-visual">
+                            <div class="ui-mockup commerce-mockup">
+                                <div class="ui-header">
+                                    <div class="ui-dots">
+                                        <div class="ui-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="ui-body">
+                                    <div class="ui-product-card">
+                                        <div class="ui-product-img"></div>
+                                    </div>
+                                    <div class="ui-product-card">
+                                        <div class="ui-product-img"></div>
+                                    </div>
+                                    <div class="ui-product-card">
+                                        <div class="ui-product-img"></div>
+                                    </div>
+                                    <div class="ui-product-card">
+                                        <div class="ui-product-img"></div>
+                                    </div>
+                                    <div class="ui-product-card">
+                                        <div class="ui-product-img"></div>
+                                    </div>
+                                    <div class="ui-product-card">
+                                        <div class="ui-product-img"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="project-info glass">
+                            <div class="project-tags">
+                                <span>E-commerce</span>
+                                <span>High Performance</span>
+                            </div>
+                            <h3>Neon Commerce</h3>
+                            <p>Plataforma de vendas ultra-rápida com carregamento em 0.4s.</p>
+                            <a href="projects/neon.html" class="btn-link">Ver Demo <i
+                                    data-lucide="external-link"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Orbital -->
+                    <div class="project-card tilt-element" data-tilt-max="5">
+                        <div class="project-visual">
+                            <div class="ui-mockup tracking-mockup">
+                                <div class="ui-header">
+                                    <div class="ui-dots">
+                                        <div class="ui-dot"></div>
+                                    </div>
+                                    <div class="ui-bar-sm" style="width: 50%"></div>
+                                </div>
+                                <div class="ui-body">
+                                    <div class="ui-map">
+                                        <div class="ui-pin"></div>
+                                        <div class="ui-pin"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="project-info glass">
+                            <div class="project-tags">
+                                <span>SaaS</span>
+                                <span>Logística</span>
+                            </div>
+                            <h3>Orbital Tracking</h3>
+                            <p>Sistema de rastreamento global com visualização 3D de frotas.</p>
+                            <a href="projects/orbital.html" class="btn-link">Ver Demo <i
+                                    data-lucide="external-link"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Project 5: Cortex (NEW) -->
+                    <div class="project-card tilt-element" data-tilt-max="5">
+                        <div class="project-visual">
+                            <div class="ui-mockup ai-mockup">
+                                <div class="ui-header">
+                                    <div class="ui-dots text-teal-400">AI KERNEL</div>
+                                </div>
+                                <div class="ui-body">
+                                    <div class="ui-brain-node">
+                                        <div class="ui-brain-center"></div>
+                                    </div>
+                                    <div class="ui-node-line"></div>
+                                    <div class="ui-brain-node">
+                                        <div class="ui-brain-center"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="project-info glass">
+                            <div class="project-tags">
+                                <span>AI SaaS</span>
+                                <span>Dashboard</span>
+                            </div>
+                            <h3>Cortex CRM</h3>
+                            <p>CRM com Inteligência Artificial preditiva para times de vendas.</p>
+                            <a href="projects/cortex.html" class="btn-link">Ver Demo <i
+                                    data-lucide="external-link"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Project 6: Krypto (NEW) -->
+                    <div class="project-card tilt-element" data-tilt-max="5">
+                        <div class="project-visual">
+                            <div class="ui-mockup crypto-mockup">
+                                <div class="ui-header">
+                                    <div class="ui-dots">
+                                        <div class="ui-coin"></div>
+                                    </div>
+                                </div>
+                                <div class="ui-body">
+                                    <div class="ui-ticker">
+                                        <div class="ui-coin"></div>
+                                        <div class="ui-bar-sm" style="background:#f59e0b; width:40%"></div>
+                                    </div>
+                                    <div class="ui-line-chart">
+                                        <div class="ui-trend"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="project-info glass">
+                            <div class="project-tags">
+                                <span>Web3</span>
+                                <span>Exchange</span>
+                            </div>
+                            <h3>Krypto Vault</h3>
+                            <p>Exchange descentralizada (DEX) com atualização em tempo real.</p>
+                            <a href="projects/krypto.html" class="btn-link">Ver Demo <i
+                                    data-lucide="external-link"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section (NEW) -->
+        <section id="testimonials" class="section testimonials">
+            <div class="container">
+                <h2 class="section__title text-center">Quem confia na Nexus</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card glass">
+                        <div class="quote-icon">“</div>
+                        <p class="testimonial-text">Depois que a Nexus assumiu nossa segurança, nunca mais tivemos
+                            downtime. O sistema Hades é impenetrável.</p>
+                        <div class="testimonial-author">
+                            <div class="avatar bg-purple">R</div>
+                            <div>
+                                <strong>Roberto M.</strong>
+                                <span>CTO, TechFin</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card glass">
+                        <div class="quote-icon">“</div>
+                        <p class="testimonial-text">O redesenho do nosso e-commerce aumentou a conversão em 400%. O
+                            site carrega instantaneamente.</p>
+                        <div class="testimonial-author">
+                            <div class="avatar bg-green">A</div>
+                            <div>
+                                <strong>Ana Souza</strong>
+                                <span>Head de Marketing, VarejoX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card glass">
+                        <div class="quote-icon">“</div>
+                        <p class="testimonial-text">Profissionalismo raro de encontrar. Entregaram antes do prazo e com
+                            qualidade superior ao esperado.</p>
+                        <div class="testimonial-author">
+                            <div class="avatar bg-blue">C</div>
+                            <div>
+                                <strong>Carlos D.</strong>
+                                <span>Diretor, Logística Global</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section (NEW) -->
+        <section id="faq" class="section faq">
+            <div class="container narrow-container">
+                <h2 class="section__title text-center">Perguntas Frequentes</h2>
+                <div class="faq-list">
+                    <div class="faq-item glass" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <h3>Vocês atendem empresas fora do Brasil?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sim! Atendemos clientes nos EUA, Europa e América Latina. Nossa equipe é bilíngue e todo
+                                o código é entregue no padrão internacional.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item glass" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <h3>Qual o prazo médio de entrega de um projeto?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Landing Pages de alta performance: 5 a 10 dias. Softwares e Sistemas complexos: 30 a 90
+                                dias, dependendo do escopo. Prezamos pela velocidade sem perder qualidade.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item glass" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <h3>Vocês oferecem suporte após a entrega?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutamente. Todos os projetos incluem 30 dias de suporte gratuito e garantia vitalícia
+                                contra bugs de nossa autoria. Também temos planos de manutenção mensal.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item glass" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <h3>Como funciona a segurança e hospedagem?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Utilizamos servidores de ponta (AWS, Vercel) com criptografia SSL e proteção contra
+                                DDoS. Seu projeto já nasce blindado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack Marquee (NEW) -->
+        <section class="section tech-stack overflow-hidden">
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <!-- Set 1 -->
+                    <span class="tech-item"><i data-lucide="code-2"></i> React</span>
+                    <span class="tech-item"><i data-lucide="server"></i> Node.js</span>
+                    <span class="tech-item"><i data-lucide="database"></i> PostgreSQL</span>
+                    <span class="tech-item"><i data-lucide="cloud"></i> AWS</span>
+                    <span class="tech-item"><i data-lucide="cpu"></i> Python</span>
+                    <span class="tech-item"><i data-lucide="lock"></i> Kali Linux</span>
+                    <span class="tech-item"><i data-lucide="layout"></i> Tailwind</span>
+                    <span class="tech-item"><i data-lucide="box"></i> Docker</span>
+                    <!-- Set 2 (Duplicate for infinite loop) -->
+                    <span class="tech-item"><i data-lucide="code-2"></i> React</span>
+                    <span class="tech-item"><i data-lucide="server"></i> Node.js</span>
+                    <span class="tech-item"><i data-lucide="database"></i> PostgreSQL</span>
+                    <span class="tech-item"><i data-lucide="cloud"></i> AWS</span>
+                    <span class="tech-item"><i data-lucide="cpu"></i> Python</span>
+                    <span class="tech-item"><i data-lucide="lock"></i> Kali Linux</span>
+                    <span class="tech-item"><i data-lucide="layout"></i> Tailwind</span>
+                    <span class="tech-item"><i data-lucide="box"></i> Docker</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Timeline (NEW) -->
+        <section class="section process relative">
+            <div class="container">
+                <h2 class="section__title text-center mb-12">Como Hackeamos seu Crescimento</h2>
+                <div class="timeline">
+                    <!-- Line -->
+                    <div class="timeline-line"></div>
+
+                    <!-- Step 1 -->
+                    <div class="timeline-item left reveal-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass tilt-element">
+                            <i data-lucide="search" class="text-purple mb-2"></i>
+                            <h3>1. Discovery & Strategy</h3>
+                            <p>Mergulhamos no seu negócio para encontrar gargalos e oportunidades de ouro.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="timeline-item right reveal-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass tilt-element">
+                            <i data-lucide="pen-tool" class="text-blue mb-2"></i>
+                            <h3>2. Design & Architecture</h3>
+                            <p>Prototipamos interfaces de elite e desenhamos uma infraestrutura à prova de balas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="timeline-item left reveal-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass tilt-element">
+                            <i data-lucide="code" class="text-green mb-2"></i>
+                            <h3>3. High-End Dev</h3>
+                            <p>Codificação limpa, testes automatizados e segurança militar em cada linha.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="timeline-item right reveal-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass tilt-element">
+                            <i data-lucide="rocket" class="text-red mb-2"></i>
+                            <h3>4. Launch & Scale</h3>
+                            <p>Deploy seguro, monitoramento em tempo real e crescimento exponencial.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter (NEW) -->
+        <section class="section newsletter text-center">
+            <div class="container narrow-container">
+                <div class="glass p-8 rounded-2xl border border-purple-500/20 glow-purple newsletter-box">
+                    <h2 class="text-2xl font-bold mb-2">Entre para o Inner Circle</h2>
+                    <p class="text-gray-400 mb-6">Receba insights de tecnologia que seus concorrentes não têm.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Seu melhor e-mail" class="newsletter-input">
+
+                        <button type="button" class="btn btn--primary"
+                            onclick="showToast('Inscrito com sucesso! (Simulação)')">Inscrever-se</button>
+
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Differential Section -->
+        <section class="section differentials">
+            <div class="container">
+                <div class="row align-center">
+                    <div class="col-half">
+                        <h2 class="section__title">Por que a Nexus Code?</h2>
+                        <ul class="check-list">
+                            <li>
+                                <i data-lucide="check-circle" class="check-icon"></i>
+                                <div>
+                                    <strong>Velocidade Obsessiva</strong>
+                                    <p>Não entregamos código lento. Performance é dinheiro.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i data-lucide="lock" class="check-icon"></i>
+                                <div>
+                                    <strong>Segurança Militar</strong>
+                                    <p>Seus dados e de seus clientes protegidos contra ataques.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i data-lucide="heart-handshake" class="check-icon"></i>
+                                <div>
+                                    <strong>Suporte Humanizado</strong>
+                                    <p>Falamos sua língua, não "tech-gude".</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-half">
+                        <div class="tech-stack-visual glass tilt-element">
+                            <pre><code class="language-js">
+const nexusCode = {
+  performance: "100/100",
+  security: "Shielded",
+  support: "24/7",
+  result: "Growth 🚀"
+};
+
+// Ready to scale?
+startTransformation();
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </section>
+
+        <!-- Squad Section (NEW) -->
+        <section class="section squad">
+            <div class="container">
+                <h2 class="section__title text-center mb-12">Elite Squad</h2>
+
+                <div class="grid-cards">
+                    <!-- Member 1 -->
+                    <div class="card glass tilt-element text-center relative group overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500">
+                        </div>
+                        <div class="relative mx-auto mb-4 w-24 h-24 rounded-full p-1 border-2 border-purple-500/50">
+                            <img src="https://i.pravatar.cc/150?img=11" alt="Alex K."
+                                class="w-full h-full rounded-full object-cover">
+                            <div class="absolute bottom-0 right-0 w-6 h-6 bg-green-500 border-2 border-[#09090b] rounded-full"
+                                title="Online"></div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Alex K.</h3>
+                        <p class="text-xs text-purple-400 uppercase tracking-widest mb-3 font-semibold">Lead Architect
+                        </p>
+                        <p class="text-sm text-gray-400 mb-6 leading-relaxed">Ex-Google. Especialista em sistemas
+                            distribuídos e segurança ofensiva.</p>
+                        <div class="flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all">
+                            <a href="#" class="text-gray-400 hover:text-white transition"><i
+                                    data-lucide="linkedin"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white transition"><i
+                                    data-lucide="github"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white transition"><i
+                                    data-lucide="twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Member 2 -->
+                    <div class="card glass tilt-element text-center relative group overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500">
+                        </div>
+                        <div class="relative mx-auto mb-4 w-24 h-24 rounded-full p-1 border-2 border-blue-500/50">
+                            <img src="https://i.pravatar.cc/150?img=5" alt="Sarah M."
+                                class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Sarah M.</h3>
+                        <p class="text-xs text-blue-400 uppercase tracking-widest mb-3 font-semibold">UX/UI Lead</p>
+                        <p class="text-sm text-gray-400 mb-6 leading-relaxed">Premiada no Awwwards. Transforma código
+                            complexo em arte visual.</p>
+                        <div class="flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all">
+                            <a href="#" class="text-gray-400 hover:text-white transition"><i
+                                    data-lucide="dribbble"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white transition"><i
+                                    data-lucide="instagram"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Member 3 -->
+                    <div class="card glass tilt-element text-center relative group overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500">
+                        </div>
+                        <div class="relative mx-auto mb-4 w-24 h-24 rounded-full p-1 border-2 border-green-500/50">
+                            <img src="https://i.pravatar.cc/150?img=8" alt="David R."
+                                class="w-full h-full rounded-full object-cover">
+                            <div class="absolute bottom-0 right-0 w-6 h-6 bg-green-500 border-2 border-[#09090b] rounded-full"
+                                title="Available"></div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">David R.</h3>
+                        <p class="text-xs text-green-400 uppercase tracking-widest mb-3 font-semibold">Full Stack Pro
+                        </p>
+                        <p class="text-sm text-gray-400 mb-6 leading-relaxed">Mestre em React e Node.js. Otimiza
+                            performance até o milissegundo.</p>
+                        <div class="flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all">
+                            <a href="#" class="text-gray-400 hover:text-white transition"><i
+                                    data-lucide="github"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="code"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CTA / Form Section -->
+        <section id="contact" class="section contact">
+            <div class="container narrow-container">
+                <div class="contact__wrapper glass">
+                    <h2 class="section__title text-center">Solicite seu Diagnóstico</h2>
+                    <p class="text-center text-gray mp-4">Poucas vagas disponíveis para desenvolvimento este mês.</p>
+
+                    <form id="leadForm" class="form">
+                        <div class="form-group">
+                            <label for="name">Nome Completo</label>
+                            <input type="text" id="name" required placeholder="Ex: João Silva">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Nome da Empresa</label>
+                            <input type="text" id="company" required placeholder="Ex: Tech Solutions">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-info">WhatsApp / Celular</label>
+                                <input type="tel" id="contact-info" required placeholder="(11) 99999-9999">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-mail Corporativo</label>
+                                <input type="email" id="email" required placeholder="joao@empresa.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project-type">Qual sua necessidade?</label>
+                            <select id="project-type" required>
+                                <option value="" disabled selected>Selecione uma opção...</option>
+                                <option value="Site/Landing Page">Site / Landing Page Alta Conversão</option>
+                                <option value="Software/Sistema">Software / Sistema Interno</option>
+                                <option value="Cyber Security">Cyber Security / Auditoria</option>
+                                <option value="Automação">Automação de Processos</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Visão Geral do Projeto</label>
+                            <textarea id="message" rows="4"
+                                placeholder="Descreva brevemente o que você precisa..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--full btn--ripple">
+                            🚀 Quero meu diagnóstico gratuito
+                        </button>
+                    </form>
+
+                    <!-- Success State (Hidden by default) -->
+                    <div id="successMessage" class="success-message hidden">
+                        <div class="icon-box">
+                            <i data-lucide="check" class="success-icon"></i>
+                        </div>
+                        <h3>Solicitação Recebida!</h3>
+                        <p>Nossa equipe de especialistas entrará em contato em breve.</p>
+                        <button onclick="sendToWhatsAppDirect()" class="btn btn--whatsapp mt-4">
+                            <i data-lucide="message-circle"></i> Agilizar no WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container footer__container">
+                <div class="footer__brand">
+                    <div class="logo">⚡ nexus<b>code</b></div>
+                    <p>Tecnologia que impulsiona negócios.</p>
+                </div>
+                <div class="footer__rights">
+                    &copy; 2026 Nexus Code. Todos os direitos reservados.
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Floating WhatsApp -->
+    <a href="#" onclick="openWhatsApp()" class="floating-whatsapp" aria-label="Falar no WhatsApp">
+        <i data-lucide="message-circle"></i>
+    </a>
+
+    <!-- EXIT INTENT MODAL (Hidden) -->
+    <div id="exitModal" class="modal-overlay hidden">
+        <div class="modal-content relative overflow-hidden" style="max-width: 500px;">
+            <button onclick="closeExitModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i
+                    data-lucide="x"></i></button>
+            <div class="p-8 text-center bg-gradient-to-br from-gray-900 to-black">
+                <div
+                    class="w-16 h-16 bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4 border border-purple-500 animate-pulse">
+                    <i data-lucide="gift" class="text-purple-400 w-8 h-8"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">Wait! Before you go...</h2>
+                <p class="text-gray-400 mb-6">Don't leave empty-handed. Get our <span class="text-white font-bold">"2026
+                        Tech Audit Checklist"</span> for free.</p>
+
+
+
+                <a href="#" onclick="showToast('PDF Downloaded! (Simulation)'); closeExitModal()"
+                    class="btn btn--primary btn--full mb-3">
+
+                    <i data-lucide="download"></i> Download Free PDF
+                </a>
+                <button onclick="closeExitModal()" class="text-xs text-gray-500 hover:text-white underline">No, thanks.
+                    I'm good.</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+    </script>
+    <!-- CALCULATOR MODAL -->
+    <div id="calcModal" class="modal-overlay hidden">
+        <div class="modal-content" id="calcContent">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title"><i data-lucide="calculator" class="text-purple"></i> Estimativa de Projeto
+                    </h2>
+                    <p class="modal-subtitle">Personalize para receber uma prévia de investimento.</p>
+                </div>
+                <button onclick="toggleCalc(false)" class="close-btn"><i data-lucide="x"></i></button>
+            </div>
+
+            <!-- Steps Container -->
+            <div class="modal-body custom-scroll">
+
+                <!-- Step 1: Platform -->
+                <div class="step active" data-step="1">
+                    <h3 class="step-title">1. Qual tipo de projeto?</h3>
+                    <div class="options-grid">
+                        <div class="calc-option" onclick="selectOption('type', 'landing', 2500, this)">
+                            <i data-lucide="layout" class="option-icon text-purple"></i>
+                            <div class="option-label">Landing Page</div>
+                            <div class="option-desc">Conversão & Vendas</div>
+                        </div>
+                        <div class="calc-option" onclick="selectOption('type', 'webapp', 8000, this)">
+                            <i data-lucide="monitor" class="option-icon text-blue"></i>
+                            <div class="option-label">Web App / SaaS</div>
+                            <div class="option-desc">Sistemas Complexos</div>
+                        </div>
+                        <div class="calc-option" onclick="selectOption('type', 'mobile', 12000, this)">
+                            <i data-lucide="smartphone" class="option-icon text-green"></i>
+                            <div class="option-label">Mobile App</div>
+                            <div class="option-desc">iOS & Android</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Features -->
+                <div class="step hidden" data-step="2">
+                    <h3 class="step-title">2. O que ele precisa ter?</h3>
+                    <div class="features-grid">
+                        <div class="calc-check" onclick="toggleFeature(1500, this)">
+                            <div class="check-wrapper">
+                                <div class="checkbox"><i data-lucide="check"></i></div>
+                                <span>Login & Usuários</span>
+                            </div>
+                        </div>
+                        <div class="calc-check" onclick="toggleFeature(2500, this)">
+                            <div class="check-wrapper">
+                                <div class="checkbox"><i data-lucide="check"></i></div>
+                                <span>Pagamentos (Stripe/Pix)</span>
+                            </div>
+                        </div>
+                        <div class="calc-check" onclick="toggleFeature(2000, this)">
+                            <div class="check-wrapper">
+                                <div class="checkbox"><i data-lucide="check"></i></div>
+                                <span>Painel Admin</span>
+                            </div>
+                        </div>
+                        <div class="calc-check" onclick="toggleFeature(3500, this)">
+                            <div class="check-wrapper">
+                                <div class="checkbox"><i data-lucide="check"></i></div>
+                                <span>Integração IA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Result -->
+                <div class="step hidden text-center" data-step="3">
+                    <div class="success-icon-wrapper">
+                        <i data-lucide="check-circle" class="success-icon-lg"></i>
+                    </div>
+                    <h3 class="result-title">Estimativa Pronta!</h3>
+                    <p class="result-desc">Com base nas suas escolhas, a tecnologia Nexus pode entregar isso em aprox.
+                        <span class="highlight-text">20-45 dias</span>.
+                    </p>
+
+                    <div class="price-box">
+                        <div class="price-label">Investimento Estimado</div>
+                        <div class="price-value" id="finalPrice">R$ 0,00</div>
+                    </div>
+
+                    <button onclick="sendCalcToWhatsApp()" class="btn btn--highlight btn--full">
+                        <i data-lucide="message-circle"></i> Receber Proposta Detalhada
+                    </button>
+                    <p class="legal-text">Ao clicar, você enviará os detalhes para nosso especialista.</p>
+                </div>
+
+            </div>
+
+            <!-- Footer Navigation -->
+            <div class="modal-footer">
+                <button onclick="prevStep()" class="btn-text" id="btnPrev" disabled>Voltar</button>
+                <button onclick="nextStep()" class="btn btn--light" id="btnNext">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Floating WhatsApp -->
+    <a href="javascript:void(0)" onclick="openWhatsApp()" class="floating-whatsapp group" title="Fale Conosco"
+        style="display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 9999 !important;">
+        <div class="status-dot"
+            style="position: absolute; top: 0; right: 0; width: 12px; height: 12px; background: #ef4444; border: 2px solid #25d366; border-radius: 50%;">
+        </div>
+        <i data-lucide="message-circle" style="color: white; width: 32px; height: 32px;"></i>
+    </a>
+
+    <!-- Matrix Toggle (Discreet) -->
+    <button onclick="activateMatrixMode()" class="matrix-toggle" title="Hacker Mode">
+        <i data-lucide="terminal-square"></i>
+    </button>
+
+
+
+    <!-- AI CHAT WIDGET -->
+    <div class="chat-widget-container">
+
+
+        <!-- Chat Bubble -->
+        <div id="chatWidgetBubble" class="chat-bubble">
+            <div class="bubble-content">
+
+
+                <div class="bot-avatar">
+                    <i data-lucide="bot"></i>
+                </div>
+
+
+                <div>
+                    <div class="bot-name">Nexus AI</div>
+                    <div class="bot-message" id="chatText">Olá! Posso gerar uma estimativa rápida para seu projeto?
+                    </div>
+
+                    <div class="chat-options-container" id="chatOptions">
+                        <button onclick="toggleCalc(true); closeChat()" class="chat-btn chat-btn--primary">🚀 Sim, quero
+                            orçar agora</button>
+                        <button onclick="openWhatsApp()" class="chat-btn chat-btn--secondary">💬 Falar com
+                            humano</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Toggle Button -->
+        <button onclick="toggleChat()" class="chat-toggle-btn group" id="chatToggleBtn">
+            <!-- Badge Removed -->
+            <!-- Bot Icon Added -->
+            <i data-lucide="bot" class="icon-msg"></i>
+            <i data-lucide="x" class="icon-close"></i>
+        </button>
+
+
+    </div>
+
+
+    <!-- Icons Script -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="script.js"></script>
+    <script src="visual-effects.js"></script>
+</body>
+
+</html>

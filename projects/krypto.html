@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krypto Vault - DEX Demo</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        .chart-line {
+            stroke: #a855f7;
+            stroke-width: 2;
+            fill: none;
+            filter: drop-shadow(0 0 4px #a855f7);
+        }
+
+
+        .back-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #a855f7;
+            border: 1px solid #a855f7;
+            padding: 12px 24px;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #a855f7;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: -300px;
+            background: #111;
+            border: 1px solid #333;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: right 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2000;
+            border-left: 4px solid #a855f7;
+        }
+
+        .toast.show {
+            right: 20px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 1rem;
+                flex-wrap: wrap;
+                height: auto;
+                padding-bottom: 1rem;
+                padding-top: 1rem;
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .mobile-hide {
+                display: none;
+            }
+
+            .order-panel {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid #333;
+                height: auto;
+            }
+
+            .main-content {
+                flex-direction: column;
+            }
+
+            .chart-area {
+                height: 300px;
+                flex: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="border-b border-gray-800 flex items-center justify-between px-8 bg-[#050505]">
+        <div class="text-2xl font-bold flex items-center gap-2"><i data-lucide="box" class="text-purple-500"></i>
+            KRYPTO.<span class="text-purple-500">VAULT</span></div>
+        <div class="flex gap-6 text-sm font-medium text-gray-400 mobile-hide">
+            <a href="#" class="text-white border-b-2 border-purple-500 pb-4 -mb-4">Exchange</a>
+            <a href="#" class="hover:text-white">NFTs</a>
+            <a href="#" class="hover:text-white">Earn</a>
+            <a href="#" class="hover:text-white">Portfolio</a>
+        </div>
+        <button id="walletBtn" onclick="connectWallet()"
+            class="bg-purple-600/10 border border-purple-600/50 text-purple-400 hover:bg-purple-600 hover:text-white px-6 py-2 rounded-full font-bold transition flex items-center gap-2">
+            <i data-lucide="wallet"></i> <span id="walletText">Connect Wallet</span>
+        </button>
+    </header>
+
+    <div class="flex-1 flex main-content overflow-hidden">
+        <!-- Sidebar Pairs -->
+        <div class="w-64 border-r border-gray-800 p-4 hidden md:block bg-[#020202]">
+            <div class="text-xs text-gray-500 font-bold mb-4">MARKETS</div>
+            <div class="space-y-1">
+                <div class="flex justify-between p-3 bg-gray-900 rounded cursor-pointer border-l-4 border-purple-500">
+                    <div>
+                        <div class="font-bold text-sm">BTC/USDT</div>
+                        <div class="text-[10px] text-gray-500">Vol 2.4B</div>
+                    </div>
+                    <div class="text-green-400 text-sm font-mono">+2.4%</div>
+                </div>
+                <div
+                    class="flex justify-between p-3 hover:bg-gray-900 rounded cursor-pointer transition opacity-60 hover:opacity-100">
+                    <div>
+                        <div class="font-bold text-sm">ETH/USDT</div>
+                        <div class="text-[10px] text-gray-500">Vol 1.1B</div>
+                    </div>
+                    <div class="text-red-400 text-sm font-mono">-0.8%</div>
+                </div>
+                <div
+                    class="flex justify-between p-3 hover:bg-gray-900 rounded cursor-pointer transition opacity-60 hover:opacity-100">
+                    <div>
+                        <div class="font-bold text-sm">SOL/USDT</div>
+                        <div class="text-[10px] text-gray-500">Vol 850M</div>
+                    </div>
+                    <div class="text-green-400 text-sm font-mono">+5.1%</div>
+                </div>
+            </div>
+
+            <div class="mt-auto pt-8 border-t border-gray-800 mt-8">
+                <div class="text-xs text-gray-500 font-bold mb-2">MY ASSETS</div>
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="text-gray-400">USDT</span>
+                    <span class="font-mono">$ <span id="usdtBalance">0.00</span></span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">BTC</span>
+                    <span class="font-mono"><span id="btcBalance">0.0000</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chart Area -->
+        <div class="flex-1 flex flex-col relative chart-area bg-[#050505]">
+            <!-- Ticker -->
+            <div class="h-16 border-b border-gray-800 flex items-center px-6 gap-8 justify-between md:justify-start">
+                <div>
+                    <div class="text-2xl font-bold font-mono tracking-tight" id="priceDisplay">$ 42,852.10</div>
+                    <div class="text-xs text-gray-400">Bitcoin / Tether US</div>
+                </div>
+                <div class="hidden md:flex gap-4 text-xs">
+                    <div>
+                        <div class="text-gray-500">24h High</div>
+                        <div class="font-mono text-gray-300">$ 43,100.00</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-500">24h Low</div>
+                        <div class="font-mono text-gray-300">$ 41,200.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SVG Chart -->
+            <div class="flex-1 relative overflow-hidden group">
+                <svg id="chartSvg" class="w-full h-full" viewBox="0 0 1000 400" preserveAspectRatio="none">
+                    <path id="chartPath" class="chart-line" d="M0,200 Q200,100 400,300 T1000,200" />
+                    <defs>
+                        <linearGradient id="grad" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0%" stop-color="rgba(168, 85, 247, 0.2)" />
+                            <stop offset="100%" stop-color="transparent" />
+                        </linearGradient>
+                    </defs>
+                    <path id="chartFill" d="M0,200 Q200,100 400,300 T1000,200 V400 H0 Z" fill="url(#grad)" />
+                </svg>
+
+                <!-- Crosshair (only visual) -->
+                <div
+                    class="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
+                    <div class="absolute w-full h-[1px] bg-gray-700 top-1/2 border-dashed border-gray-600 border-t">
+                    </div>
+                    <div class="absolute h-full w-[1px] bg-gray-700 left-1/2 border-dashed border-gray-600 border-l">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Panel -->
+        <div class="w-80 border-l border-gray-800 p-6 bg-[#0a0a0a] order-panel flex flex-col overflow-y-auto">
+            <div class="flex p-1 bg-black rounded-lg mb-6 border border-gray-800">
+                <button
+                    class="flex-1 bg-green-500 text-black font-bold py-2 rounded shadow-[0_0_15px_rgba(34,197,94,0.3)]">Buy</button>
+                <button class="flex-1 text-gray-400 font-bold py-2 rounded hover:text-white transition">Sell</button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="flex justify-between text-xs text-gray-500 mb-1">
+                        <span>Price (USDT)</span>
+                        <span class="text-purple-500 cursor-pointer">Market</span>
+                    </label>
+                    <input type="text" id="inputPrice" readonly value="42852.10"
+                        class="w-full bg-black border border-gray-800 p-3 rounded text-right font-mono text-white focus:border-purple-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="flex justify-between text-xs text-gray-500 mb-1">
+                        <span>Amount (BTC)</span>
+                        <span>Avail: <span class="text-white">Max</span></span>
+                    </label>
+                    <div class="relative">
+                        <input type="number" id="inputAmount" value="0.1" step="0.01"
+                            class="w-full bg-black border border-gray-800 p-3 rounded text-right font-mono text-white focus:border-purple-500 focus:outline-none pr-12">
+                        <span class="absolute right-3 top-3 text-xs text-gray-500 font-bold">BTC</span>
+                    </div>
+                </div>
+
+                <!-- Quick Percentages -->
+                <div class="flex gap-2 text-[10px] font-mono text-gray-500">
+                    <button
+                        class="flex-1 bg-gray-900 border border-gray-800 rounded py-1 hover:bg-gray-800">25%</button>
+                    <button
+                        class="flex-1 bg-gray-900 border border-gray-800 rounded py-1 hover:bg-gray-800">50%</button>
+                    <button
+                        class="flex-1 bg-gray-900 border border-gray-800 rounded py-1 hover:bg-gray-800">75%</button>
+                    <button
+                        class="flex-1 bg-gray-900 border border-gray-800 rounded py-1 hover:bg-gray-800">100%</button>
+                </div>
+
+                <div class="pt-4">
+                    <button onclick="executeTrade()"
+                        class="w-full bg-green-500 hover:bg-green-400 text-black font-bold py-4 rounded-lg transition shadow-[0_0_15px_rgba(34,197,94,0.4)] active:scale-[0.98]">
+                        BUY BTC
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-8 flex-1">
+                <div class="text-xs text-gray-500 font-bold mb-2 flex justify-between">
+                    <span>RECENT TRADES</span>
+                    <span class="text-[10px] opacity-50">Real-time</span>
+                </div>
+                <div id="tradeList" class="space-y-1 text-xs font-mono overflow-hidden">
+                    <!-- filled by js -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i data-lucide="check-circle" class="text-green-400"></i>
+        <div>
+            <div class="font-bold text-sm">Order Executed</div>
+            <div class="text-xs text-gray-400" id="toastMsg">Bought 0.1 BTC</div>
+        </div>
+    </div>
+
+    <a href="../index.html" class="back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+
+    <script>
+        lucide.createIcons();
+
+        // State
+        let currentPrice = 42852.10;
+        let usdtBalance = 0;
+        let btcBalance = 0;
+        let walletConnected = false;
+
+        const priceEl = document.getElementById('priceDisplay');
+        const inputPrice = document.getElementById('inputPrice');
+        const tradeList = document.getElementById('tradeList');
+        const chartPath = document.getElementById('chartPath');
+        const chartFill = document.getElementById('chartFill');
+
+        // Fake Chart Data (points)
+        let chartData = [];
+        for (let i = 0; i < 20; i++) chartData.push(200 + Math.random() * 100 - 50);
+
+        function updateChart() {
+            // Generate Path String
+            const width = 1000;
+            const height = 400;
+            const step = width / (chartData.length - 1);
+
+            let d = `M0,${chartData[0]}`;
+            for (let i = 1; i < chartData.length; i++) {
+                // Bezier smoothing could go here, simulating simple lines for speed
+                d += ` L${i * step},${chartData[i]}`;
+            }
+
+            chartPath.setAttribute('d', d);
+            chartFill.setAttribute('d', d + ` V${height} H0 Z`);
+        }
+
+        function updatePrice() {
+            const change = (Math.random() - 0.5) * 50;
+            currentPrice += change;
+
+            // Update UI
+            priceEl.innerText = '$ ' + currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 });
+            priceEl.style.color = change > 0 ? '#4ade80' : '#f87171'; // Green or Red
+            inputPrice.value = currentPrice.toFixed(2);
+
+            // Update Chart Data
+            // Map price change to Y coord (inverted, lower Y is higher on screen)
+            const yChange = change * -0.5;
+            let newY = chartData[chartData.length - 1] + yChange;
+            // clamp
+            if (newY < 50) newY = 50;
+            if (newY > 350) newY = 350;
+
+            chartData.shift();
+            chartData.push(newY);
+            updateChart();
+
+            // Random Trade Feed
+            if (Math.random() > 0.6) addTrade(currentPrice, change > 0, false);
+        }
+
+        function addTrade(price, isBuy, isUser) {
+            const div = document.createElement('div');
+            div.className = `flex justify-between ${isUser ? 'bg-purple-900/20 p-1 rounded border border-purple-500/30' : ''}`;
+            const time = new Date().toLocaleTimeString().split(' ')[0];
+            const size = (Math.random() * 2).toFixed(4);
+            div.innerHTML = `<span class="text-gray-500">${time}</span>
+                             <span class="${isBuy ? 'text-green-500' : 'text-red-500'}">${price.toFixed(1)}</span>
+                             <span class="${isUser ? 'text-white font-bold' : 'text-gray-600'}">${size}</span>`;
+            tradeList.prepend(div);
+            if (tradeList.children.length > 15) tradeList.lastChild.remove();
+        }
+
+        // Wallet Logic
+        function connectWallet() {
+            if (walletConnected) return;
+            const btn = document.getElementById('walletBtn');
+            const txt = document.getElementById('walletText');
+
+            txt.innerText = "Connecting...";
+
+            setTimeout(() => {
+                walletConnected = true;
+                usdtBalance = 50000.00; // Mock balance
+                btcBalance = 0.0000;
+
+                txt.innerText = "0x8F...2B";
+                btn.classList.add('bg-green-500/10', 'border-green-500/50', 'text-green-400');
+                btn.classList.remove('bg-purple-600/10', 'text-purple-400');
+
+                updateBalances();
+                showToast("Wallet Connected", "Balance: $50,000 USDT");
+            }, 1000);
+        }
+
+        function updateBalances() {
+            document.getElementById('usdtBalance').innerText = usdtBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+            document.getElementById('btcBalance').innerText = btcBalance.toFixed(4);
+        }
+
+        function executeTrade() {
+            if (!walletConnected) {
+                showToast("Error", "Connect Wallet First!");
+                return;
+            }
+
+            const amount = parseFloat(document.getElementById('inputAmount').value);
+            const cost = amount * currentPrice;
+
+            if (cost > usdtBalance) {
+                showToast("Insufficient Funds", "You need more USDT");
+                return;
+            }
+
+            // Execute
+            usdtBalance -= cost;
+            btcBalance += amount;
+            updateBalances();
+            addTrade(currentPrice, true, true);
+            showToast("Order Filled", `Bought ${amount} BTC @ $${currentPrice.toFixed(0)}`);
+        }
+
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('.font-bold').innerText = title;
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        setInterval(updatePrice, 200);
+        updateChart(); // init
+
+    </script>
+</body>
+
+</html>

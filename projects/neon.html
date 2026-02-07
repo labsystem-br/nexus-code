@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Commerce - Product Demo</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
+
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .product-img {
+            transition: transform 0.5s ease;
+        }
+
+        .product-img:hover {
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #000;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 pb-20 md:pb-0">
+
+    <!-- Nav -->
+    <nav class="flex justify-between items-center p-6 bg-white shadow-sm sticky top-0 z-50">
+        <div class="text-2xl font-bold tracking-tighter text-purple-600">NEON.</div>
+        <div class="hidden md:flex gap-8 font-medium">
+            <a href="#" class="hover:text-purple-600">Lançamentos</a>
+            <a href="#" class="hover:text-purple-600">Masculino</a>
+            <a href="#" class="hover:text-purple-600">Feminino</a>
+            <a href="#" class="hover:text-purple-600 text-red-500">Sale</a>
+        </div>
+        <div class="flex gap-4">
+            <i data-lucide="search" class="cursor-pointer"></i>
+            <div class="relative cursor-pointer">
+                <i data-lucide="shopping-bag"></i>
+                <span id="cartCount"
+                    class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Layout -->
+    <div class="container mx-auto px-6 py-8 md:py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <!-- Image Gallery -->
+            <div
+                class="relative bg-gray-200 rounded-3xl overflow-hidden aspect-square flex items-center justify-center shadow-lg">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                    alt="Nike Shoe" class="product-img object-cover w-full h-full">
+                <div class="absolute top-4 left-4 bg-black text-white px-3 py-1 text-xs font-bold uppercase rounded">New
+                    Arrival</div>
+            </div>
+
+            <!-- Product Details -->
+            <div>
+                <div class="text-purple-600 font-bold mb-2 text-sm md:text-base">SNEAKER CULTURE</div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Nike Air Max <br>Neon Future</h1>
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="text-3xl font-bold">R$ 899,90</span>
+                    <span class="text-gray-400 line-through">R$ 1.299,90</span>
+                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">-30% OFF</span>
+                </div>
+
+                <p class="text-gray-500 mb-8 max-w-md">Design revolucionário com amortecimento a ar visível. O tênis
+                    perfeito para quem busca estilo urbano e conforto extremo.</p>
+
+                <!-- Color Selection -->
+                <div class="mb-6">
+                    <div class="text-sm font-bold mb-3">COR: <span
+                            class="text-gray-500 font-normal">Vermelho/Branco</span></div>
+                    <div class="flex gap-3">
+                        <button class="w-8 h-8 rounded-full bg-red-500 ring-2 ring-offset-2 ring-red-500"></button>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-500 hover:ring-2 ring-offset-2 ring-blue-500 transition"></button>
+                        <button
+                            class="w-8 h-8 rounded-full bg-black hover:ring-2 ring-offset-2 ring-black transition"></button>
+                    </div>
+                </div>
+
+                <!-- Size Selection -->
+                <div class="mb-8">
+                    <div class="text-sm font-bold mb-3">TAMANHO</div>
+                    <div class="flex gap-3 overflow-x-auto pb-2 md:pb-0">
+                        <button onclick="selectSize(this)"
+                            class="w-12 h-12 border rounded-lg hover:border-black hover:bg-black hover:text-white transition flex-shrink-0 flex items-center justify-center">39</button>
+                        <button onclick="selectSize(this)"
+                            class="w-12 h-12 border rounded-lg bg-black text-white flex-shrink-0 flex items-center justify-center size-selected">40</button>
+                        <button onclick="selectSize(this)"
+                            class="w-12 h-12 border rounded-lg hover:border-black hover:bg-black hover:text-white transition flex-shrink-0 flex items-center justify-center">41</button>
+                        <button onclick="selectSize(this)"
+                            class="w-12 h-12 border rounded-lg hover:border-black hover:bg-black hover:text-white transition flex-shrink-0 flex items-center justify-center">42</button>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div
+                    class="flex gap-4 fixed bottom-0 left-0 w-full p-4 bg-white border-t border-gray-100 md:static md:bg-transparent md:border-0 md:p-0 z-40">
+                    <button onclick="addToBag()"
+                        class="bg-purple-600 text-white px-8 py-4 rounded-full font-bold text-lg flex-1 shadow-lg shadow-purple-200 hover:bg-purple-700 hover:scale-[1.02] transition">
+                        Adicionar à Sacola
+                    </button>
+                    <button
+                        class="w-14 h-14 border rounded-full flex items-center justify-center hover:bg-gray-50 transition flex-shrink-0">
+                        <i data-lucide="heart"></i>
+                    </button>
+                </div>
+
+                <div class="mt-8 flex gap-6 text-sm text-gray-500 pb-20 md:pb-0">
+                    <div class="flex items-center gap-2"><i data-lucide="truck" class="w-4"></i> Frete Grátis</div>
+                    <div class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4"></i> Garantia
+                        Original</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <i data-lucide="check-circle" class="text-green-400 w-5"></i>
+        <div class="font-bold text-sm">Produto adicionado à sacola!</div>
+    </div>
+
+    <a href="../index.html" class="back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+
+    <script>
+        lucide.createIcons();
+
+        let cart = 0;
+
+        function selectSize(btn) {
+            document.querySelectorAll('.size-selected').forEach(el => {
+                el.classList.remove('bg-black', 'text-white', 'size-selected');
+                el.classList.add('hover:border-black');
+            });
+            btn.classList.add('bg-black', 'text-white', 'size-selected');
+            btn.classList.remove('hover:border-black');
+        }
+
+        function addToBag() {
+            cart++;
+            const badge = document.getElementById('cartCount');
+            badge.innerText = cart;
+            badge.style.opacity = 1;
+
+            // Pulse animation
+            badge.style.transform = 'scale(1.5)';
+            setTimeout(() => badge.style.transform = 'scale(1)', 200);
+
+            // Show Toast
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+
+</html>
